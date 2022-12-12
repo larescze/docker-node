@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./views/:/usr/src/app/views
+    networks:
+      - custom-network
+  postgres:
+    image: 'postgres:14.5-alpine'
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      PGPASSWORD: '${DB_PASSWORD}'
+      POSTGRES_DB: '${DB_DATABASE}'
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    volumes:
+      - 'custom-postgres:/var/lib/postgresql/data'
+    networks:
+      - custom-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME}', '-p${DB_PASSWORD}']
+      interval: 30s
+      timeout: 30s
+      retries: 3
+  pgadmin:
+    image: dpage/pgadmin4:6.13
+    restart: unless-stopped
+    links:
+      - postgres:postgres
+    ports:
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '${DB_EMAIL}'
+      PGADMIN_DEFAULT_PASSWORD: '${DB_PASSWORD}'
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge
+volumes:
+  custom-postgres:
+    driver: local
