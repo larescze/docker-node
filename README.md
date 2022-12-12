@@ -12,10 +12,19 @@ Open the terminal and create the ``.env`` from the ``.env.dev``:
 cp .env.dev .env
 ```
 
+Build containers:
+```
+docker compose build
+```
+
 Run containers:
 ```
 docker compose up -d
 ```
+
+Visit the platform at the http://127.0.0.1:8000
+
+## Server registration with pgAdmin
 
 Open pgAdmin in your browser: http://localhost:8080 and login with:
 
