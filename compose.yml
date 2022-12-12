@@ -2,11 +2,11 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile
     ports:
       - 8000:8000
     volumes:
-      - ./views/:/usr/src/app/views
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - custom-network
   postgres:
