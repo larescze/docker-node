@@ -1,4 +1,4 @@
-# Docker PostgreSQL and pgAdmin
+# Docker Node.js app with PostgreSQL
 
 ## Requirements
 
@@ -22,7 +22,7 @@ Run containers:
 docker compose up -d
 ```
 
-Visit the platform at the http://127.0.0.1:8000
+Visit the app at the http://127.0.0.1:8000
 
 ## Server registration with pgAdmin
 
